@@ -1,0 +1,22 @@
+[
+     {
+       "cve": "SNYK-JS-TMPL-1583443",
+       "alwaysOmit": true
+     },
+     {
+        "cve": "SNYK-JS-PROMPTS-1729737",
+        "alwaysOmit": true
+     },
+     {
+       "cve": "SNYK-JS-JSONSCHEMA-1920922",
+       "alwaysOmit": true
+     },
+     {
+        "cve": "SNYK-JS-AXIOS-1579269",
+        "alwaysOmit": true
+     },
+     {
+       "cve": "SNYK-JS-ANSIREGEX-1583908",
+       "alwaysOmit": true
+     }
+]
