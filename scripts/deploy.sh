@@ -87,12 +87,11 @@ EOF
   # provide git token to download artifacts. In sample app artifacts are stored in the app repo
   # If your app is GitHub based then you need to provide your personal access token in the environment property.
   export GIT_TOKEN
-  if [[ -z $(get_env artifact-token) ]]; then
+  if [[ -z $(get_env artifact-token "") ]]; then
     GIT_TOKEN="$(cat ../git-token)"
   else
     GIT_TOKEN="$(get_env artifact-token)"
-  fi  
-
+  fi
   #
   # read inventory entry for artifact
   #
@@ -103,10 +102,13 @@ EOF
   #
   DEPLOYMENT_FILE="${NORMALIZED_APP_NAME}-deployment.yaml"
 
-  if [[ "${ARTIFACT_URL}" != *"github"* ]]; then
-    curl -H "Authorization: token ${GIT_TOKEN}" ${ARTIFACT_URL} > $DEPLOYMENT_FILE
+  if [[ "${ARTIFACT_URL}" == *"github"* ]]; then
+    http_response=$(curl -H "Authorization: token ${GIT_TOKEN}" -s -w "%{http_code}\n" ${ARTIFACT_URL} -o $DEPLOYMENT_FILE)
   else
-    curl -H "PRIVATE-TOKEN: ${GIT_TOKEN}" ${ARTIFACT_URL} > $DEPLOYMENT_FILE
+    http_response=$(curl -H "PRIVATE-TOKEN: ${GIT_TOKEN}" -s -w "%{http_code}\n" ${ARTIFACT_URL} -o $DEPLOYMENT_FILE)
+  fi
+  if [ "$http_response" != "200" ]; then
+    echo "Failed to download the artifact. Please provide the correct token as the env property 'artifact-token'."
   fi
  
 

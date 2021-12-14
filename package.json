@@ -7,7 +7,7 @@
     "acceptance-test": "jest ./acceptance-test"
   },
   "devDependencies": {
-    "jest": "^27.0.1",
+    "jest": "^27.4.5",
     "axios": "^0.21.1"
   },
   "dependencies": {
